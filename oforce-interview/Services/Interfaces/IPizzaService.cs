@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace oforce_interview.Services.Interfaces
 {
-    interface IPizzaService
+    public interface IPizzaService
     {
         List<Pizzas> Get();
         Pizzas Get(int id);
