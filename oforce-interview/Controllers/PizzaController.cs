@@ -21,8 +21,9 @@ namespace oforce_interview.Controllers
             _pizzaService = pizzaService;
         }
 
+        /*
         [HttpGet]
-        public ActionResult<ItemsResponse<Pizzas>> GetAll()
+        public ActionResult<ItemsResponse<Pizzas>> Get()
         {
             ItemsResponse<Pizzas> response = null;
             ActionResult result = null;
@@ -43,6 +44,35 @@ namespace oforce_interview.Controllers
                 }
             }
             catch(Exception ex)
+            {
+                result = StatusCode(500, new ErrorResponse(ex.Message));
+            }
+            return result;
+        }
+        */
+
+        [HttpGet]
+        public ActionResult<ItemsResponse<Pizzas>> GetAll()
+        {
+            ItemsResponse<Pizzas> response = null;
+            ActionResult result = null;
+
+            try
+            {
+                List<Pizzas> pizzas = _pizzaService.GetAllWithToppings();
+                if (pizzas == null)
+                {
+                    result = NotFound();
+                }
+                else
+                {
+                    response = new ItemsResponse<Pizzas>();
+                    response.Items = pizzas;
+
+                    result = Ok(response);
+                }
+            }
+            catch (Exception ex)
             {
                 result = StatusCode(500, new ErrorResponse(ex.Message));
             }
@@ -79,7 +109,38 @@ namespace oforce_interview.Controllers
             return result;
         }
 
+        /*
+        [HttpGet("toppings/{id:int}")]
+        public ActionResult<ItemResponse<Pizzas>> GetPizzaAndToppingById(int id)
+        {
+            ItemResponse<Pizzas> response = null;
+            ActionResult result = null;
 
+            try
+            {
+                Pizzas pizza = _pizzaService.GetPizzaAndToppingById(id);
+                if (pizza == null)
+                {
+                    result = NotFound();
+                }
+                else
+                {
+                    response = new ItemResponse<Pizzas>();
+                    response.Item = pizza;
+                    result = Ok(response);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result = StatusCode(500, new ErrorResponse(ex.Message));
+            }
+
+            return result;
+        }
+
+    */
 
         [HttpPost]
         public ActionResult<ItemResponse<int>> Insert(PizzaInsertRequest req)

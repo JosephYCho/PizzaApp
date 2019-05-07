@@ -25,6 +25,18 @@ const getById = id => {
     .catch(helpers.onGlobalError);
 };
 
+const getPizzaAndToppingsById = id =>{
+  const config = {
+    method:"GET",
+    url:helpers.API_HOST_PREFIX + `api/pizzas/toppings/${id}`,
+    crossdomain:true,
+    headers:{"Content-Type": "application/json"}
+  };
+  return axios(config)
+    .then(helpers.onGlobalSuccess)
+    .catch(helpers.onGlobalError)
+}
+
 const insertPizza = data => {
   const config = {
     method: "POST",
@@ -63,4 +75,4 @@ const deletePizza = id => {
     .catch(helpers.onGlobalError);
 };
 
-export { getAll, getById, insertPizza, updatePizza, deletePizza };
+export { getAll, getById, getPizzaAndToppingsById, insertPizza, updatePizza, deletePizza };

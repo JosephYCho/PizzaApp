@@ -57,7 +57,7 @@ export class Pizza extends React.Component {
     return (
       <div>
         <PizzaHeader toppings={this.state.toppings} />
-        <PizzaList />
+        <PizzaList pizzas />
       </div>
     );
   }

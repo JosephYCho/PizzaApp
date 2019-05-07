@@ -1,6 +1,20 @@
 import React from "react";
+import * as pizzaService from '../../services/pizzaService';
+import * as toppingService from '../../services/toppingService';
 
 class PizzaList extends React.Component {
+
+state ={
+  pizzas:[]
+}
+  onLoadPage = ()=>{
+  }
+
+  
+
+
+
+
   render() {
     return (
       <div className="d-flex no-block">
@@ -16,20 +30,8 @@ class PizzaList extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {/* {this.props.campaigns && (
-                        <CampaignsListMap
-                          campaigns={this.props.campaigns}
-                          onDelete={this.onDelete}
-                          getDate={this.getDate}
-                          getCampaignData={this.getCampaignData}
-                        />
-                      )}
-                      {this.state.confirmDelete && (
-                        <SweetAlertWarning
-                          confirmAction={this.deleteCampaign}
-                          cancelAction={this.cancelDelete}
-                        />
-                      )} */}
+                
+               
               </tbody>
             </table>
           </div>

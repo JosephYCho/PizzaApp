@@ -9,6 +9,7 @@ namespace oforce_interview.Domain.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public IEnumerable<string> Toppings { get; set; }
         public DateTime DateCreated {get;set;}
         public DateTime DateModified {get;set;}
     }

@@ -9,8 +9,10 @@ namespace oforce_interview.Services.Interfaces
 {
     public interface IPizzaService
     {
-        List<Pizzas> Get();
+        //List<Pizzas> Get();
+        List<Pizzas> GetAllWithToppings();
         Pizzas Get(int id);
+        Pizzas GetPizzaAndToppingById(int id);
         int Insert(PizzaInsertRequest req);
         void Update(PizzaUpdateRequest req);
         void Delete(int id);
