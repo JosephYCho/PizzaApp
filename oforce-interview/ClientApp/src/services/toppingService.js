@@ -41,7 +41,7 @@ const insertTopping = data => {
 const updateTopping = (data, id) => {
   const config = {
     method: "PUT",
-    url: helpers.API_HOST_PREFIX + `/api/toppings/${id}`,
+    url: helpers.API_HOST_PREFIX + `api/toppings/${id}`,
     crossdomain: true,
     data,
     headers: { "Content-Type": "application/json" }
@@ -54,7 +54,7 @@ const updateTopping = (data, id) => {
 const deleteTopping = id => {
   const config = {
     method: "DELETE",
-    url: helpers.API_HOST_PREFIX + `/api/toppings/${id}`,
+    url: helpers.API_HOST_PREFIX + `api/toppings/${id}`,
     crossdomain: true,
     headers: { "Content-Type": "application/json" }
   };

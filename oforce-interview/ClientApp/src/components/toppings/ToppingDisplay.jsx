@@ -1,13 +1,15 @@
 import React from "react";
-import { CardText, Button } from "reactstrap";
+import { Button } from "reactstrap";
 
 class ToppingDisplay extends React.PureComponent {
+  handleDelete = () => {
+    console.log("delete");
+    this.props.onDeleteClick(this.props.id);
+  };
+
   render() {
     return (
       <React.Fragment>
-        {/* <CardText>
-                    {this.props.topping}
-                </CardText> */}
         <tr>
           <td className="">{this.props.counter + ". "}</td>
           <td className="col" id="toppingTable">
@@ -16,7 +18,12 @@ class ToppingDisplay extends React.PureComponent {
 
           <td className="toppingBtn">
             <div className="row justify-content-center">
-              <Button outline color="danger" size="sm">
+              <Button
+                outline
+                color="danger"
+                size="sm"
+                onClick={this.handleDelete}
+              >
                 Delete
               </Button>
               {/* <Button close aria-label="Cancel">

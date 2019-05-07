@@ -18,7 +18,7 @@ class ToppingList extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                <MapToppings toppings={this.props.toppings} />
+                <MapToppings toppings={this.props.toppings} onDeleteClick={this.props.onDeleteClick}/>
               </tbody>
             </Table>
           </CardBody>
