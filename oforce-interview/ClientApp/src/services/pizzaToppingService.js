@@ -19,6 +19,7 @@ const insertToppingToPizza = (data)=>{
     method:"INSERT",
     url:helpers.API_HOST_PREFIX + `api/pizzatoppings`,
     crossdomain: true,
+    data,
     headers : {"Content-Type" : "application/json"}
   }
   return axios(config)
