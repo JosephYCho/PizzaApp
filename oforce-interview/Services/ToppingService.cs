@@ -1,94 +1,94 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using oforce_interview.Domain.Model;
+using oforce_interview.Domain.Request;
+using oforce_interview.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using oforce_interview.Domain.Model;
-using oforce_interview.Domain.Request;
-using oforce_interview.Services.Interfaces;
 
 namespace oforce_interview.Services
 {
-    public class PizzaService:IPizzaService
+    public class ToppingService:IToppingService
     {
-        public IConfiguration _connectionString;
+        IConfiguration _connectionString;
 
-        public PizzaService(IConfiguration configuration)
+        public ToppingService (IConfiguration configuration)
         {
             _connectionString = configuration;
         }
 
-
-        public List<Pizzas> Get()
+        public List<Toppings> Get()
         {
-            using (var con = GetConnection())
+            using(var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_GetAll";
+                cmd.CommandText = "dbo.Toppings_GetAll";
                 cmd.CommandType = CommandType.StoredProcedure;
-                using (var reader = cmd.ExecuteReader())
+
+                using(var reader = cmd.ExecuteReader())
                 {
-                    List<Pizzas> pizzas = null;
+                    List<Toppings> toppings = null;
                     while (reader.Read())
                     {
-                        Pizzas pizza = new Pizzas();
+                        Toppings topping = new Toppings();
                         int index = 0;
 
-                        pizza.Id = reader.GetInt32(index++);
-                        pizza.Name = reader.GetString(index++);
-                        pizza.DateCreated = reader.GetDateTime(index++);
-                        pizza.DateModified = reader.GetDateTime(index++);
+                        topping.Id = reader.GetInt32(index++);
+                        topping.Name = reader.GetString(index++);
+                        topping.DateCreated = reader.GetDateTime(index++);
+                        topping.DateModified = reader.GetDateTime(index++);
 
-                        if (pizzas == null)
+                        if(toppings == null)
                         {
-                            pizzas = new List<Pizzas>();
+                            toppings = new List<Toppings>();
                         }
 
-                        pizzas.Add(pizza);
+                        toppings.Add(topping);
 
                     }
-                    return pizzas;
+                    return toppings;
                 }
             }
         }
 
-        public Pizzas Get(int id)
+        public Toppings Get(int id)
         {
             using (var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_GetById";
+                cmd.CommandText = "dbo.Toppings_GetById";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", id);
 
-                using (var reader = cmd.ExecuteReader())
+                using( var reader = cmd.ExecuteReader())
                 {
-                    Pizzas pizza = null;
+                    Toppings topping = null;
                     while (reader.Read())
                     {
-                        pizza = new Pizzas();
+                        topping = new Toppings();
                         int index = 0;
 
-                        pizza.Id = reader.GetInt32(index++);
-                        pizza.Name = reader.GetString(index++);
-                        pizza.DateCreated = reader.GetDateTime(index++);
-                        pizza.DateModified = reader.GetDateTime(index++);
+                        topping.Id = reader.GetInt32(index++);
+                        topping.Name = reader.GetString(index++);
+                        topping.DateCreated = reader.GetDateTime(index++);
+                        topping.DateModified = reader.GetDateTime(index++);
                     }
-
-                    return pizza;
+                    return topping;
                 }
+
             }
         }
 
-        public int Insert(PizzaInsertRequest req)
+        public int Insert (ToppingInsertRequest req)
         {
             int id = 0;
-            using (var con = GetConnection())
+            using(var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_Insert";
+                cmd.CommandText = "dbo.Toppings_Insert";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Name", req.Name);
                 cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
@@ -101,13 +101,12 @@ namespace oforce_interview.Services
             }
         }
 
-
-        public void Update(PizzaUpdateRequest req)
+        public void Update(ToppingUpdateRequest req)
         {
             using (var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_Update";
+                cmd.CommandText = "dbo.Toppings_Update";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", req.Id);
                 cmd.Parameters.AddWithValue("@Name", req.Name);
@@ -117,18 +116,16 @@ namespace oforce_interview.Services
             }
         }
 
-
         public void Delete(int id)
         {
-            using (var con = GetConnection())
+            using( var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_Delete";
+                cmd.CommandText = "dbo.Toppings_Delete";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", id);
 
                 cmd.ExecuteNonQuery();
-
             }
         }
 
@@ -139,6 +136,10 @@ namespace oforce_interview.Services
 
             con.Open();
             return con;
+
         }
+
+
+
     }
 }

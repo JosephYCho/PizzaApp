@@ -10,68 +10,71 @@ using System.Threading.Tasks;
 
 namespace oforce_interview.Controllers
 {
-    [Route("api/pizzas")]
+    [Route("api/toppings")]
     [ApiController]
-    public class PizzaController : ControllerBase
+    public class ToppingController:ControllerBase
     {
-        private IPizzaService _pizzaService;
+        private IToppingService _toppingService;
 
-        public PizzaController(IPizzaService pizzaService)
+        public ToppingController(IToppingService toppingService)
         {
-            _pizzaService = pizzaService;
+            _toppingService = toppingService;
         }
+
 
         [HttpGet]
-        public ActionResult<ItemsResponse<Pizzas>> GetAll()
+        public ActionResult<ItemsResponse<Toppings>> GetAll()
         {
-            ItemsResponse<Pizzas> response = null;
+            ItemsResponse<Toppings> response = null;
             ActionResult result = null;
 
             try
             {
-                List<Pizzas> pizzas = _pizzaService.Get();
-                if(pizzas == null)
+                List<Toppings> toppings = _toppingService.Get();
+                if(toppings == null)
                 {
                     result = NotFound();
                 }
                 else
                 {
-                    response = new ItemsResponse<Pizzas>();
-                    response.Items = pizzas;
+                    response = new ItemsResponse<Toppings>();
+                    response.Items = toppings;
 
                     result = Ok(response);
                 }
+            
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = StatusCode(500, new ErrorResponse(ex.Message));
             }
             return result;
         }
+
 
         [HttpGet("{id:int}")]
-        public ActionResult<ItemResponse<Pizzas>> GetById(int id)
+        public ActionResult<ItemResponse<Toppings>> GetById(int id)
         {
-            ItemResponse<Pizzas> response = null;
+            ItemResponse<Toppings> response = null;
             ActionResult result = null;
 
             try
             {
-                Pizzas pizza = _pizzaService.Get(id);
-                if(pizza == null)
+                Toppings topping = _toppingService.Get(id);
+                if (topping == null)
                 {
                     result = NotFound();
                 }
                 else
                 {
-                    response = new ItemResponse<Pizzas>();
-                    response.Item = pizza;
+                    response = new ItemResponse<Toppings>();
+                    response.Item = topping;
                     result = Ok(response);
 
 
                 }
-             }
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 result = StatusCode(500, new ErrorResponse(ex.Message));
             }
@@ -79,17 +82,15 @@ namespace oforce_interview.Controllers
             return result;
         }
 
-
-
         [HttpPost]
-        public ActionResult<ItemResponse<int>> Insert(PizzaInsertRequest req)
+        public ActionResult<ItemResponse<int>> Insert(ToppingInsertRequest req)
         {
             ItemResponse<int> response = null;
             ActionResult result = null;
 
             try
             {
-                int id = _pizzaService.Insert(req);
+                int id = _toppingService.Insert(req);
                 if (id > 0)
                 {
                     response = new ItemResponse<int>();
@@ -109,14 +110,14 @@ namespace oforce_interview.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<SuccessResponse> Update(PizzaUpdateRequest req)
+        public ActionResult<SuccessResponse> Update(ToppingUpdateRequest req)
         {
             SuccessResponse response = null;
             ActionResult result = null;
 
             try
             {
-                _pizzaService.Update(req);
+                _toppingService.Update(req);
                 response = new SuccessResponse();
                 result = Ok(response);
 
@@ -129,7 +130,6 @@ namespace oforce_interview.Controllers
             return result;
         }
 
-
         [HttpDelete("{id:int}")]
         public ActionResult<SuccessResponse> Delete(int id)
         {
@@ -139,12 +139,12 @@ namespace oforce_interview.Controllers
 
             try
             {
-                _pizzaService.Delete(id);
+                _toppingService.Delete(id);
                 response = new SuccessResponse();
-                result= Ok(response);
+                result = Ok(response);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = StatusCode(500, new ErrorResponse(ex.Message));
             }
@@ -152,6 +152,5 @@ namespace oforce_interview.Controllers
             return result;
         }
 
-
-    } 
+    }
 }

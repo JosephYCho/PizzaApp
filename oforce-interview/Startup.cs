@@ -31,6 +31,8 @@ namespace oforce_interview
             });
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IPizzaService, PizzaService>();
+            services.AddSingleton<IPizzaToppingService, PizzaToppingService>();
+            services.AddSingleton<IToppingService, ToppingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
