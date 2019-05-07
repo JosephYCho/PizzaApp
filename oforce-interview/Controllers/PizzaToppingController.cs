@@ -54,25 +54,17 @@ namespace oforce_interview.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ItemResponse<int>> Insert (PizzaToppingInsertRequest req)
+        public ActionResult<SuccessResponse> Insert (PizzaToppingInsertRequest req)
         {
-            ItemResponse<int> response = null;
+            SuccessResponse response = null;
             ActionResult result = null;
 
 
             try
             {
-                int id = _pizzaToppingService.Insert(req);
-                if (id > 0)
-                {
-                    response = new ItemResponse<int>();
-                    response.Item = id;
-                    result = Ok(response);
-                }
-                else
-                {
-                    result = NotFound();
-                }
+                _pizzaToppingService.Insert(req);
+                response = new SuccessResponse();
+                result = Ok(response);
             }
             catch (Exception ex)
             {

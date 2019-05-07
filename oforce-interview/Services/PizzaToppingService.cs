@@ -54,9 +54,9 @@ namespace oforce_interview.Services
             }
         }
 
-        public int Insert(PizzaToppingInsertRequest req)
+        public void Insert(PizzaToppingInsertRequest req)
         {
-            int id = 0;
+            
             using (var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
@@ -67,9 +67,9 @@ namespace oforce_interview.Services
 
                 cmd.ExecuteNonQuery();
 
-                id = (int)cmd.Parameters["@Id"].Value;
+                
 
-                return id;
+                
             }    
         }
 

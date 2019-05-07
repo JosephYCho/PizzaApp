@@ -1,33 +1,31 @@
-import axios from 'axios';
-import * as helpers from './serviceHelpers';
+import axios from "axios";
+import * as helpers from "./serviceHelpers";
 
-const getToppingsByPizzaId = (id)=>{
+const getToppingsByPizzaId = id => {
   const config = {
-    method:"GET",
+    method: "GET",
     url: helpers.API_HOST_PREFIX + `api/pizzatoppings`,
-    crossdomain :true,
-    headers : {"Content-Type" : "application/json"}
-  }
+    crossdomain: true,
+    headers: { "Content-Type": "application/json" }
+  };
 
   return axios(config)
     .then(helpers.onGlobalError)
-    .catch(helpers.onGlobalError)
-}
+    .catch(helpers.onGlobalError);
+};
 
-const insertToppingToPizza = (data)=>{
+const insertToppingToPizza = data => {
   const config = {
-    method:"INSERT",
-    url:helpers.API_HOST_PREFIX + `api/pizzatoppings`,
+    method: "POST",
+    url: helpers.API_HOST_PREFIX + `api/pizzatoppings`,
     crossdomain: true,
     data,
-    headers : {"Content-Type" : "application/json"}
-  }
+    headers: { "Content-Type": "application/json" }
+  };
   return axios(config)
     .then(helpers.onGlobalSuccess)
-    .catch(helpers.onGlobalError)
-}
-
-
+    .catch(helpers.onGlobalError);
+};
 
 const deleteTopping = id => {
   const config = {
@@ -41,6 +39,4 @@ const deleteTopping = id => {
     .catch(helpers.onGlobalError);
 };
 
-
-
-export { getToppingsByPizzaId,insertToppingToPizza,deleteTopping}
+export { getToppingsByPizzaId, insertToppingToPizza, deleteTopping };
