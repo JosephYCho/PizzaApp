@@ -2,6 +2,7 @@ import React from "react";
 import {
   Modal,
   ModalBody,
+  ModalHeader,
   Button,
   Form,
   FormGroup,
@@ -17,10 +18,20 @@ import AddToppingToPizzaModal from "./AddToppingsToPizzaModal";
 export class PizzaForm extends React.Component {
   state = {
     name: "",
+    modal: null,
     errors: {
       name: false
     }
   };
+
+  // toggle = () => {
+  //   // this.setState(prevState => ({
+  //   //   modal: !prevState.modal
+  //   // }));
+  //   this.setState({
+  //     modal: !this.state.modal
+  //   });
+  // };
 
   handleChange = e => {
     const name = e.target.name;
@@ -84,6 +95,7 @@ export class PizzaForm extends React.Component {
     const id = response.item;
     //this.props.onAdd(id);
     this.routeToAddToppings(id);
+    //this.props.toggle();
   };
 
   onInsertFail = error => {
@@ -92,7 +104,16 @@ export class PizzaForm extends React.Component {
 
   render() {
     return (
-      <Modal isOpen={true} toppings={this.props.toppings}>
+      <Modal
+        isOpen={this.props.modal}
+        modalTransition={{ timeout: 200 }}
+        backdropTransition={{ timeout: 100 }}
+        shouldCloseOnOverlayClick={true}
+        toggle={this.props.toggle}
+        fade={true}
+        toppings={this.props.toppings}
+      >
+        <ModalHeader toggle={this.props.toggle}>Create</ModalHeader>
         <ModalBody toppings={this.props.toppings}>
           <Form toppings={this.props.toppings}>
             <FormGroup>
@@ -120,6 +141,7 @@ export class PizzaForm extends React.Component {
                 <AddToppingToPizzaModal
                   {...props}
                   toppings={this.props.toppings}
+                  toggle={this.props.toggle}
                 />
               )}
             />

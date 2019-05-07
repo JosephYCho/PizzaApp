@@ -11,9 +11,7 @@ class PizzaList extends React.Component {
                 <tr>
                   <th>Name</th>
                   <th>Toppings</th>
-
                   <th>Post Date</th>
-
                   <th>Action</th>
                 </tr>
               </thead>

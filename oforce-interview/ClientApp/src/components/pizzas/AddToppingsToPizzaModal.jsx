@@ -2,16 +2,13 @@ import React from "react";
 import {
   Modal,
   ModalBody,
+  ModalHeader,
   Button,
   Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-  FormFeedback
+  FormGroup
 } from "reactstrap";
 import * as pizzaToppingService from "../../services/pizzaToppingService";
-import PizzaDropdown from "./PizzaToppingDropdown";
+//import PizzaDropdown from "./PizzaToppingDropdown";
 
 class AddToppingsToPizzaModal extends React.Component {
   state = {
@@ -20,15 +17,25 @@ class AddToppingsToPizzaModal extends React.Component {
     selectedValue: "Select Toppings",
     toppingMapped: [],
     toppings: this.props.toppings,
+    modal: true,
     errors: {
       name: false
     }
   };
 
   componentDidMount() {
-    
     this.updateMappedToppings(this.props.toppings);
   }
+
+  toggle = () => {
+    // this.setState(prevState => ({
+    //   modal: !prevState.modal
+    // }));
+    // this.setState({
+    //   modal: !this.state.modal
+    // });
+    this.props.toggle();
+  };
 
   updateMappedToppings = toppings => {
     const mappedToppings = this.mapTopping(toppings);
@@ -138,7 +145,16 @@ class AddToppingsToPizzaModal extends React.Component {
 
   render() {
     return (
-      <Modal isOpen={true} toppings={this.props.toppings}>
+      <Modal
+        isOpen={this.state.modal}
+        modalTransition={{ timeout: 200 }}
+        backdropTransition={{ timeout: 100 }}
+        //shouldCloseOnOverlayClick={true}
+        toggle={this.props.toggle}
+        fade={true}
+        toppings={this.props.toppings}
+      >
+        <ModalHeader toggle={this.toggle}>Add Toppings</ModalHeader>
         <ModalBody toppings={this.props.toppings}>
           <Form toppings={this.props.toppings}>
             <FormGroup toppings={this.props.toppings}>

@@ -37,6 +37,13 @@ class ToppingForm extends React.Component {
           [target]: true
         }
       });
+    } else {
+      this.setState({
+        errors: {
+          ...this.state.errors,
+          [target]: false
+        }
+      });
     }
   };
 
@@ -55,7 +62,7 @@ class ToppingForm extends React.Component {
   clearForm = () => {
     this.setState({
       name: "",
-      error: {
+      errors: {
         ...this.state.errors,
         name: false
       }
@@ -91,7 +98,7 @@ class ToppingForm extends React.Component {
             name="name"
             id="topping"
             placeholder="Enter Toppings Here"
-            invalid={this.state.errors.topping}
+            invalid={this.state.errors.name}
             onChange={this.handleChange}
             onBlur={this.handleTouch}
             value={this.state.name}

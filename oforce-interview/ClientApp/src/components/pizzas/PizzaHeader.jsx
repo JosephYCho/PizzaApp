@@ -3,11 +3,20 @@ import { Route } from "react-router";
 import { withRouter } from "react-router-dom";
 
 import { PizzaForm } from "./PizzaForm";
-import PizzaList from './PizzaList';
 
 class PizzaHeader extends React.Component {
+  state={
+    modal:false
+  }
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
   handleClick = () => {
     this.props.history.push("/pizzas/createpizza");
+    this.toggle();
   };
 
   render() {
@@ -32,10 +41,10 @@ class PizzaHeader extends React.Component {
           </div>
 
           <br />
-          <PizzaList />
+          {/* <PizzaList /> */}
           <Route path="/pizzas/createpizza"
           //  component={PizzaForm} 
-          render={(props) =><PizzaForm {...props} toppings={this.props.toppings} />}
+          render={(props) =><PizzaForm {...props} toppings={this.props.toppings} modal={this.state.modal} toggle={this.toggle} />}
            />
         </div>
       </div>
