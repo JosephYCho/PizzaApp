@@ -53,6 +53,19 @@ export class Pizza extends React.Component {
     console.log(error);
   };
 
+  getById= id =>{
+    pizzaService.getById(id)
+    .then(this.onGetByIdSuccess)
+    .catch(this.onAxiosFail)
+  }
+
+  onGetByIdSuccess = response =>{
+    const pizzas = [...this.state.pizzas, response.item]
+    this.setState({
+      pizzas
+    })
+  }
+
   getDate = longDate => {
     let date = new Date(longDate);
     return (
@@ -65,11 +78,32 @@ export class Pizza extends React.Component {
     );
   };
 
+  handleDelete=(id)=>{
+    pizzaService.deletePizza(id)
+    .then(this.onDeleteSuccess)
+    .then(()=>this.removeDeletedPizza(id))
+    .catch(this.onAxiosFail)
+  }
+
+  onDeleteSuccess = (response) =>{
+    console.log(response)
+  }
+
+  removeDeletedPizza = id =>{
+    this.setState(prevState=>{
+      const updatedArr = prevState.pizzas.filter(pizza=>{
+        return pizza.id !== id
+      });
+      return{pizzas:updatedArr}
+    })
+  }
+
+
   render() {
     return (
       <div>
-        <PizzaHeader toppings={this.state.toppings} />
-        <PizzaList pizzas={this.state.pizzas} getDate={this.getDate} />
+        <PizzaHeader toppings={this.state.toppings} onAdd={this.getById} />
+        <PizzaList pizzas={this.state.pizzas} getDate={this.getDate} onDelete={this.handleDelete} />
       </div>
     );
   }

@@ -21,35 +21,7 @@ namespace oforce_interview.Controllers
             _pizzaService = pizzaService;
         }
 
-        /*
-        [HttpGet]
-        public ActionResult<ItemsResponse<Pizzas>> Get()
-        {
-            ItemsResponse<Pizzas> response = null;
-            ActionResult result = null;
-
-            try
-            {
-                List<Pizzas> pizzas = _pizzaService.Get();
-                if(pizzas == null)
-                {
-                    result = NotFound();
-                }
-                else
-                {
-                    response = new ItemsResponse<Pizzas>();
-                    response.Items = pizzas;
-
-                    result = Ok(response);
-                }
-            }
-            catch(Exception ex)
-            {
-                result = StatusCode(500, new ErrorResponse(ex.Message));
-            }
-            return result;
-        }
-        */
+      
 
         [HttpGet]
         public ActionResult<ItemsResponse<Pizzas>> GetAll()

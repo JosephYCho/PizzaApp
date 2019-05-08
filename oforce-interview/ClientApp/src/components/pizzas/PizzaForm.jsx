@@ -108,14 +108,13 @@ export class PizzaForm extends React.Component {
         isOpen={this.props.modal}
         modalTransition={{ timeout: 200 }}
         backdropTransition={{ timeout: 100 }}
-        shouldCloseOnOverlayClick={true}
         toggle={this.props.toggle}
         fade={true}
-        toppings={this.props.toppings}
+        //toppings={this.props.toppings}
       >
         <ModalHeader toggle={this.props.toggle}>Create</ModalHeader>
-        <ModalBody toppings={this.props.toppings}>
-          <Form toppings={this.props.toppings}>
+        <ModalBody>
+          <Form>
             <FormGroup>
               <Label for="pizza">Create A Pizza</Label>
               <Input
@@ -140,6 +139,7 @@ export class PizzaForm extends React.Component {
               render={props => (
                 <AddToppingToPizzaModal
                   {...props}
+                  onAdd={this.props.onAdd}
                   toppings={this.props.toppings}
                   toggle={this.props.toggle}
                 />

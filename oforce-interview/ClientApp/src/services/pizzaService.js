@@ -25,17 +25,17 @@ const getById = id => {
     .catch(helpers.onGlobalError);
 };
 
-const getPizzaAndToppingsById = id =>{
+const getPizzaAndToppingsById = id => {
   const config = {
-    method:"GET",
-    url:helpers.API_HOST_PREFIX + `api/pizzas/toppings/${id}`,
-    crossdomain:true,
-    headers:{"Content-Type": "application/json"}
+    method: "GET",
+    url: helpers.API_HOST_PREFIX + `api/pizzas/toppings/${id}`,
+    crossdomain: true,
+    headers: { "Content-Type": "application/json" }
   };
   return axios(config)
     .then(helpers.onGlobalSuccess)
-    .catch(helpers.onGlobalError)
-}
+    .catch(helpers.onGlobalError);
+};
 
 const insertPizza = data => {
   const config = {
@@ -53,7 +53,7 @@ const insertPizza = data => {
 const updatePizza = (data, id) => {
   const config = {
     method: "PUT",
-    url: helpers.API_HOST_PREFIX + `/api/pizzas/${id}`,
+    url: helpers.API_HOST_PREFIX + `api/pizzas/${id}`,
     crossdomain: true,
     data,
     headers: { "Content-Type": "application/json" }
@@ -66,7 +66,7 @@ const updatePizza = (data, id) => {
 const deletePizza = id => {
   const config = {
     method: "DELETE",
-    url: helpers.API_HOST_PREFIX + `/api/pizzas/${id}`,
+    url: helpers.API_HOST_PREFIX + `api/pizzas/${id}`,
     crossdomain: true,
     headers: { "Content-Type": "application/json" }
   };
@@ -75,4 +75,11 @@ const deletePizza = id => {
     .catch(helpers.onGlobalError);
 };
 
-export { getAllPizzaWithToppings, getById, getPizzaAndToppingsById, insertPizza, updatePizza, deletePizza };
+export {
+  getAllPizzaWithToppings,
+  getById,
+  getPizzaAndToppingsById,
+  insertPizza,
+  updatePizza,
+  deletePizza
+};

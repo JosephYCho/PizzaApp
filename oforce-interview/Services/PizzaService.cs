@@ -20,41 +20,6 @@ namespace oforce_interview.Services
             _connectionString = configuration;
         }
 
-        /*
-        public List<Pizzas> Get()
-        {
-            using (var con = GetConnection())
-            {
-                var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_GetAll";
-                cmd.CommandType = CommandType.StoredProcedure;
-                using (var reader = cmd.ExecuteReader())
-                {
-                    List<Pizzas> pizzas = null;
-                    while (reader.Read())
-                    {
-                        Pizzas pizza = new Pizzas();
-                        int index = 0;
-
-                        pizza.Id = reader.GetInt32(index++);
-                        pizza.Name = reader.GetString(index++);
-                        pizza.DateCreated = reader.GetDateTime(index++);
-                        pizza.DateModified = reader.GetDateTime(index++);
-
-                        if (pizzas == null)
-                        {
-                            pizzas = new List<Pizzas>();
-                        }
-
-                        pizzas.Add(pizza);
-
-                    }
-                    return pizzas;
-                }
-            }
-        }
-
-            */
 
         public Pizzas Get(int id)
         {
@@ -77,6 +42,8 @@ namespace oforce_interview.Services
                         pizza.Name = reader.GetString(index++);
                         pizza.DateCreated = reader.GetDateTime(index++);
                         pizza.DateModified = reader.GetDateTime(index++);
+
+                        pizza.Toppings = GetToppingsById(pizza.Id);
                     }
 
                     return pizza;
@@ -283,7 +250,7 @@ namespace oforce_interview.Services
             using (var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_Delete";
+                cmd.CommandText = "dbo.Pizzas_Delete_V2";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", id);
 

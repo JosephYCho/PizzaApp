@@ -6,6 +6,10 @@ class PizzaDisplay extends React.PureComponent{
   componentDidMount(){
     console.log(this.props.pizza)
   }
+
+  handleDelete=()=>{
+    this.props.onDelete(this.props.id)
+  }
     render(){
         return(
             <React.Fragment>

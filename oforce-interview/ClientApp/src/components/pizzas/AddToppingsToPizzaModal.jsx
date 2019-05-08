@@ -5,18 +5,20 @@ import {
   ModalHeader,
   Button,
   Form,
-  FormGroup
+  FormGroup,
+
 } from "reactstrap";
 import * as pizzaToppingService from "../../services/pizzaToppingService";
-//import PizzaDropdown from "./PizzaToppingDropdown";
+import ToppingsBreadcrumb from "./ToppingsBreadcrumb";
 
 class AddToppingsToPizzaModal extends React.Component {
   state = {
     pizzaId: null,
-    //toppingId: null,
     selectedValue: "Select Toppings",
     toppingMapped: [],
-    toppings: this.props.toppings,
+    toppings: [],
+    selectedTopping:"",
+    progress: [],
     modal: true,
     errors: {
       name: false
@@ -27,58 +29,19 @@ class AddToppingsToPizzaModal extends React.Component {
     this.updateMappedToppings(this.props.toppings);
   }
 
-  toggle = () => {
-    // this.setState(prevState => ({
-    //   modal: !prevState.modal
-    // }));
-    // this.setState({
-    //   modal: !this.state.modal
-    // });
-    this.props.toggle();
-  };
+  // toggle = () => {
+  //   this.props.toggle();
+  // };
 
   updateMappedToppings = toppings => {
     const mappedToppings = this.mapTopping(toppings);
     this.setState({
+      toppings,
       selectedValue: "Select Toppings",
       pizzaId: this.props.location.state.id,
       toppingMapped: mappedToppings
     });
   };
-
-  // handleChange = e => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   this.setState(
-  //     {
-  //       [name]: value
-  //     },
-  //     () => this.validate(name, value)
-  //   );
-  // };
-
-  // validate = (target, value) => {
-  //   if (!value) {
-  //     this.setState({
-  //       errors: {
-  //         ...this.state.errors,
-  //         [target]: true
-  //       }
-  //     });
-  //   }
-  // };
-
-  // handleTouch = e => {
-  //   const name = e.target.name;
-  //   if (!e.target.value) {
-  //     this.setState({
-  //       errors: {
-  //         ...this.state.errors,
-  //         [name]: true
-  //       }
-  //     });
-  //   }
-  // };
 
   clearForm = () => {
     this.setState({
@@ -91,16 +54,20 @@ class AddToppingsToPizzaModal extends React.Component {
   };
 
   handleChange = e => {
-    console.log(e.target.value);
+    const value = JSON.parse(e.target.value)
+    //const selectedIndex = e.target.options.selectedIndex -1;
+    //const name = this.state.toppings[selectedIndex].name;
+
     this.setState({
-      selectedValue: e.target.value
+      selectedValue: value.id,
+      selectedTopping:value.name
     });
   };
 
   mapTopping = toppings => {
     console.log("inside");
-    const toppingList = toppings.map(topping => (
-      <option key={topping.id} value={topping.id}>
+    const toppingList = toppings.map((topping) => (
+      <option key={topping.id} value={JSON.stringify(topping)}>
         {topping.name}
       </option>
     ));
@@ -117,7 +84,13 @@ class AddToppingsToPizzaModal extends React.Component {
     });
   };
 
-  handleClick = () => {
+  handleProgress = name => {
+    this.setState({
+      progress: [...this.state.progress, name]
+    });
+  };
+
+  handleAdd = () => {
     const id = Number(this.state.selectedValue);
     const data = {
       pizzaId: this.state.pizzaId,
@@ -127,20 +100,25 @@ class AddToppingsToPizzaModal extends React.Component {
     pizzaToppingService
       .insertToppingToPizza(data)
       .then(this.onInsertSuccess)
+      //.then(()=>this.handleProgress(this.state.selectedTopping))
       .then(() => this.updateDropdown(id))
       .then(() => this.updateMappedToppings(this.state.toppings))
       //.then(this.clearForm)
-      .catch(this.onInsertFail);
+      .catch(this.onAxiosFail);
   };
 
   onInsertSuccess = response => {
     console.log(response);
-    //const id = response.item;
-    //this.props.onAdd(id);
+    this.handleProgress(this.state.selectedTopping)
   };
 
-  onInsertFail = error => {
+  onAxiosFail = error => {
     console.log(error);
+  };
+
+  handleSubmit = () => {
+    this.props.onAdd(this.props.location.state.id);
+    this.props.toggle();
   };
 
   render() {
@@ -149,12 +127,11 @@ class AddToppingsToPizzaModal extends React.Component {
         isOpen={this.state.modal}
         modalTransition={{ timeout: 200 }}
         backdropTransition={{ timeout: 100 }}
-        //shouldCloseOnOverlayClick={true}
         toggle={this.props.toggle}
         fade={true}
         toppings={this.props.toppings}
       >
-        <ModalHeader toggle={this.toggle}>Add Toppings</ModalHeader>
+        <ModalHeader toggle={this.props.toggle}>Add Toppings</ModalHeader>
         <ModalBody toppings={this.props.toppings}>
           <Form toppings={this.props.toppings}>
             <FormGroup toppings={this.props.toppings}>
@@ -170,11 +147,21 @@ class AddToppingsToPizzaModal extends React.Component {
                 {this.state.toppingMapped}
               </select>
 
-              {/* <PizzaDropdown toppings={this.props.toppings} onChange={this.handleChange}/> */}
             </FormGroup>
-
-            <Button type="button" onClick={this.handleClick}>
+            <ToppingsBreadcrumb progress={this.state.progress} />
+            <Button
+              type="button"
+              className="btn btn-success float-left"
+              onClick={this.handleAdd}
+            >
               Add
+            </Button>
+            <Button
+              type="button"
+              className="btn btn-warning  float-right"
+              onClick={this.handleSubmit}
+            >
+              Done
             </Button>
           </Form>
         </ModalBody>
