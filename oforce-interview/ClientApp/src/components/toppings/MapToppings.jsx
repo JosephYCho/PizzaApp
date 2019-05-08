@@ -1,7 +1,7 @@
 import React from 'react';
 import ToppingDisplay from './ToppingDisplay';
 
-const mapToppings =({toppings,onDeleteClick})=>{
+const mapToppings =({toppings,onDeleteClick, onUpdateClick})=>{
     const mapToppings =toppings.map((topping,index) =>(
         <ToppingDisplay 
             key={topping.id}
@@ -9,6 +9,7 @@ const mapToppings =({toppings,onDeleteClick})=>{
             id={topping.id}
             counter={index+1}
             onDeleteClick={onDeleteClick}
+            onUpdateClick={onUpdateClick}
         />
 
 

@@ -24,14 +24,6 @@ export class PizzaForm extends React.Component {
     }
   };
 
-  // toggle = () => {
-  //   // this.setState(prevState => ({
-  //   //   modal: !prevState.modal
-  //   // }));
-  //   this.setState({
-  //     modal: !this.state.modal
-  //   });
-  // };
 
   handleChange = e => {
     const name = e.target.name;
@@ -95,7 +87,6 @@ export class PizzaForm extends React.Component {
     const id = response.item;
     //this.props.onAdd(id);
     this.routeToAddToppings(id);
-    //this.props.toggle();
   };
 
   onInsertFail = error => {
@@ -110,7 +101,6 @@ export class PizzaForm extends React.Component {
         backdropTransition={{ timeout: 100 }}
         toggle={this.props.toggle}
         fade={true}
-        //toppings={this.props.toppings}
       >
         <ModalHeader toggle={this.props.toggle}>Create</ModalHeader>
         <ModalBody>
@@ -135,7 +125,6 @@ export class PizzaForm extends React.Component {
             </FormGroup>
             <Route
               path="/pizzas/createpizza/addtoppings"
-              //  component={PizzaForm}
               render={props => (
                 <AddToppingToPizzaModal
                   {...props}
@@ -146,7 +135,7 @@ export class PizzaForm extends React.Component {
               )}
             />
             <Button type="button" onClick={this.handleClick}>
-              Add
+              Next
             </Button>
           </Form>
         </ModalBody>

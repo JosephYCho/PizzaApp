@@ -43,7 +43,7 @@ export class Pizza extends React.Component {
 
   getAllPizzasSuccess = response => {
     console.log(response.items);
-    const pizzas = response.items;
+    const pizzas = response.items.slice().reverse();
     this.setState({
       pizzas
     });
@@ -60,7 +60,8 @@ export class Pizza extends React.Component {
   }
 
   onGetByIdSuccess = response =>{
-    const pizzas = [...this.state.pizzas, response.item]
+    //const pizzas = [...this.state.pizzas, response.item]
+    const pizzas =[response.item, ...this.state.pizzas]
     this.setState({
       pizzas
     })

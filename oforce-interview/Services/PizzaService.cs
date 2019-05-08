@@ -64,14 +64,12 @@ namespace oforce_interview.Services
             List<Pizzas> pizzas = null;
             Pizzas pizza = null;
             List<string> toppings = null;
-            //int pizzaId = 0;
 
             using (var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_GetByIdWithToppings";
+                cmd.CommandText = "dbo.Pizzas_GetAllWithToppings";
                 cmd.CommandType = CommandType.StoredProcedure;
-                //cmd.Parameters.AddWithValue("@Id", id);
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -91,14 +89,7 @@ namespace oforce_interview.Services
                             pizzas = new List<Pizzas>();
                         }
                         pizzas.Add(pizza);
-                    }
-                    //if (!dict.ContainsKey(pizza.Id))
-                   // {
-                       // dict[pizza.Id] = new List<string>();
-                        //toppings = GetToppingsById(pizza.Id);
-
-                       
-                    //}
+                    }   
 
                     reader.NextResult();
 
@@ -115,9 +106,7 @@ namespace oforce_interview.Services
                             if(topping != null)
                             {
                                 dict[pizzaId].Add(topping);
-                            }
-                            
-                            
+                            }       
                         }
                    if(dict != null)
                     {
@@ -129,13 +118,7 @@ namespace oforce_interview.Services
                             }
                         }
                     }
-                    
-
-
-                   // if (pizza != null)
-                    //{
-                      //  pizza.Toppings = dict[pizza.Id];
-                    //}
+                   
                     return pizzas;
                 }
             }
@@ -185,8 +168,6 @@ namespace oforce_interview.Services
                         pizzas.Add(pizza);
 
                     }
-
-
                     return pizzas;
                 }
             }
@@ -285,6 +266,7 @@ namespace oforce_interview.Services
                         }
                         DateTimeOffset expiration = DateTimeOffset.Now.AddDays(1);
                         _cacheService.Add(cachedKey, toppings, expiration);
+                     
                     }
                 }
             }
@@ -295,8 +277,7 @@ namespace oforce_interview.Services
 
             return toppings;
         }
-    
-        
+   
 
 
         private SqlConnection GetConnection()

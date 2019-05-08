@@ -3,6 +3,7 @@ import MapToppings from "./MapToppings";
 import { Card, CardBody, CardTitle, Table } from "reactstrap";
 
 class ToppingList extends React.Component {
+  // make to functional component
   render() {
     return (
       <div className="ToppingListContainer">
@@ -18,7 +19,7 @@ class ToppingList extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                <MapToppings toppings={this.props.toppings} onDeleteClick={this.props.onDeleteClick}/>
+                <MapToppings toppings={this.props.toppings} onUpdateClick={this.props.onUpdateClick} onDeleteClick={this.props.onDeleteClick}/>
               </tbody>
             </Table>
           </CardBody>

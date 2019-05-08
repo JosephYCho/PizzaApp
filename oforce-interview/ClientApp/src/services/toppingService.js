@@ -48,6 +48,7 @@ const updateTopping = (data, id) => {
   };
   return axios(config)
     .then(helpers.onGlobalSuccess)
+    .then(()=> data)
     .catch(helpers.onGlobalError);
 };
 

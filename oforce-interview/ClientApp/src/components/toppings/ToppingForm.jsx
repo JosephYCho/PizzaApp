@@ -8,14 +8,26 @@ import {
   FormText,
   FormFeedback
 } from "reactstrap";
-import * as toppingService from "../../services/toppingService";
 
 class ToppingForm extends React.Component {
   state = {
+    id: null,
     name: "",
     errors: {
       name: false
     }
+  };
+  componentDidUpdate(prevProp) {
+    if (this.props.id !== prevProp.id) {
+      this.onPageLoad();
+    }
+  }
+
+  onPageLoad = () => {
+    this.setState({
+      id: this.props.id,
+      name: this.props.name
+    });
   };
 
   handleChange = e => {
@@ -61,7 +73,7 @@ class ToppingForm extends React.Component {
 
   clearForm = () => {
     this.setState({
-      name: "",
+      
       errors: {
         ...this.state.errors,
         name: false
@@ -69,28 +81,22 @@ class ToppingForm extends React.Component {
     });
   };
 
-  handleClick = () => {
-    const { name } = this.state;
-    toppingService
-      .insertTopping({ name })
-      .then(this.onInsertSuccess)
-      .then(this.clearForm)
-      .catch(this.onInsertFail);
-  };
+   handleSubmit= e => {
+    e.preventDefault();
+    const updateId = this.state.id;
+    const { id, name } = this.state;
 
-  onInsertSuccess = response => {
-    console.log(response);
-    const id = response.item;
-    this.props.onAdd(id);
-  };
+    this.props.id
+      ? this.props.handleUpdate({ id, name }, updateId)
+      : this.props.handleInsert({ name })
 
-  onInsertFail = error => {
-    console.log(error);
+      this.clearForm();
+
   };
 
   render() {
     return (
-      <Form>
+      <Form onSubmit={this.handleSubmit}>
         <FormGroup>
           <Label for="topping">Topping</Label>
           <Input
@@ -109,9 +115,7 @@ class ToppingForm extends React.Component {
             <FormText>Enter A Topping</FormText>
           )}
         </FormGroup>
-        <Button type="button" onClick={this.handleClick}>
-          Add
-        </Button>
+        <Button>Submit</Button>
       </Form>
     );
   }

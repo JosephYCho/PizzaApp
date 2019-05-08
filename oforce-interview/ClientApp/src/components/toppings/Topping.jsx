@@ -1,11 +1,14 @@
 import React from "react";
 import * as toppingService from "../../services/toppingService";
+import { Route } from "react-router-dom";
 import ToppingForm from "./ToppingForm";
 import ToppingList from "./ToppingList";
 
 export class Topping extends React.Component {
   state = {
-    toppings: []
+    toppings: [],
+    id: null,
+    name: ""
   };
 
   componentDidMount() {
@@ -52,6 +55,55 @@ export class Topping extends React.Component {
     });
   };
 
+  handleInsert = data => {
+    toppingService
+      .insertTopping(data)
+      .then(this.onInsertSuccess)
+      .catch(this.onAxiosFail);
+  };
+
+  onInsertSuccess = response => {
+    console.log(response);
+    const id = response.item;
+    this.setState({
+      id: null,
+      name: ""
+    });
+    this.getById(id);
+  };
+
+  onInsertFail = error => {
+    console.log(error);
+  };
+
+  onUpdate = data => {
+    this.setState({
+      name: data.name,
+      id: data.id
+    });
+  };
+
+  handleUpdate = (data, id) => {
+    toppingService
+      .updateTopping(data, id)
+      .then(this.onUpdateSuccess)
+      .then()
+      .catch(this.onAxiosFail);
+  };
+
+  onUpdateSuccess = data => {
+    console.log(data);
+    this.setState(prevState => {
+      let index = prevState.toppings.findIndex(
+        topping => topping.id === data.id
+      );
+      let newArr = prevState.toppings.slice();
+      newArr[index] = data;
+      const toppings = newArr;
+      return { toppings, id: null, name: "" };
+    });
+  };
+
   getById = id => {
     toppingService
       .getById(id)
@@ -72,10 +124,17 @@ export class Topping extends React.Component {
   render() {
     return (
       <div>
-        <ToppingForm onAdd={this.getById} />
+        <ToppingForm
+          handleInsert={this.handleInsert}
+          handleUpdate={this.handleUpdate}
+          id={this.state.id}
+          name={this.state.name}
+        />
+
         <ToppingList
           toppings={this.state.toppings}
           onDeleteClick={this.handleDelete}
+          onUpdateClick={this.onUpdate}
         />
       </div>
     );

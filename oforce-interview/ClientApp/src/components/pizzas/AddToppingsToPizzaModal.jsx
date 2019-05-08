@@ -19,18 +19,12 @@ class AddToppingsToPizzaModal extends React.Component {
     selectedTopping: "",
     progress: [],
     modal: true,
-    errors: {
-      name: false
-    }
+    disable:true
   };
 
   componentDidMount() {
     this.updateMappedToppings(this.props.toppings);
   }
-
-  // toggle = () => {
-  //   this.props.toggle();
-  // };
 
   updateMappedToppings = toppings => {
     const mappedToppings = this.mapTopping(toppings);
@@ -54,8 +48,6 @@ class AddToppingsToPizzaModal extends React.Component {
 
   handleChange = e => {
     const value = JSON.parse(e.target.value);
-    //const selectedIndex = e.target.options.selectedIndex -1;
-    //const name = this.state.toppings[selectedIndex].name;
 
     this.setState({
       selectedValue: value.id,
@@ -85,6 +77,7 @@ class AddToppingsToPizzaModal extends React.Component {
 
   handleProgress = name => {
     this.setState({
+      disable:false,
       progress: [...this.state.progress, name]
     });
   };
@@ -99,10 +92,8 @@ class AddToppingsToPizzaModal extends React.Component {
     pizzaToppingService
       .insertToppingToPizza(data)
       .then(this.onInsertSuccess)
-      //.then(()=>this.handleProgress(this.state.selectedTopping))
       .then(() => this.updateDropdown(id))
       .then(() => this.updateMappedToppings(this.state.toppings))
-      //.then(this.clearForm)
       .catch(this.onAxiosFail);
   };
 
@@ -117,6 +108,8 @@ class AddToppingsToPizzaModal extends React.Component {
 
   handleSubmit = () => {
     this.props.onAdd(this.props.location.state.id);
+    this.props.history.push("/pizzas");
+
     this.props.toggle();
   };
 
@@ -124,7 +117,7 @@ class AddToppingsToPizzaModal extends React.Component {
     return (
       <Modal
         isOpen={this.state.modal}
-        modalTransition={{ timeout: 200 }}
+        modalTransition={{ timeout: 150 }}
         backdropTransition={{ timeout: 100 }}
         toggle={this.props.toggle}
         fade={true}
@@ -162,6 +155,7 @@ class AddToppingsToPizzaModal extends React.Component {
               type="button"
               className="btn btn-warning  float-right"
               onClick={this.handleSubmit}
+              disabled={this.state.disable}
             >
               Done
             </Button>
