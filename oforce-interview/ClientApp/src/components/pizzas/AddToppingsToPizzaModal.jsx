@@ -5,8 +5,7 @@ import {
   ModalHeader,
   Button,
   Form,
-  FormGroup,
-
+  FormGroup
 } from "reactstrap";
 import * as pizzaToppingService from "../../services/pizzaToppingService";
 import ToppingsBreadcrumb from "./ToppingsBreadcrumb";
@@ -17,7 +16,7 @@ class AddToppingsToPizzaModal extends React.Component {
     selectedValue: "Select Toppings",
     toppingMapped: [],
     toppings: [],
-    selectedTopping:"",
+    selectedTopping: "",
     progress: [],
     modal: true,
     errors: {
@@ -54,19 +53,19 @@ class AddToppingsToPizzaModal extends React.Component {
   };
 
   handleChange = e => {
-    const value = JSON.parse(e.target.value)
+    const value = JSON.parse(e.target.value);
     //const selectedIndex = e.target.options.selectedIndex -1;
     //const name = this.state.toppings[selectedIndex].name;
 
     this.setState({
       selectedValue: value.id,
-      selectedTopping:value.name
+      selectedTopping: value.name
     });
   };
 
   mapTopping = toppings => {
     console.log("inside");
-    const toppingList = toppings.map((topping) => (
+    const toppingList = toppings.map(topping => (
       <option key={topping.id} value={JSON.stringify(topping)}>
         {topping.name}
       </option>
@@ -109,7 +108,7 @@ class AddToppingsToPizzaModal extends React.Component {
 
   onInsertSuccess = response => {
     console.log(response);
-    this.handleProgress(this.state.selectedTopping)
+    this.handleProgress(this.state.selectedTopping);
   };
 
   onAxiosFail = error => {
@@ -146,9 +145,12 @@ class AddToppingsToPizzaModal extends React.Component {
                 </option>
                 {this.state.toppingMapped}
               </select>
-
             </FormGroup>
-            <ToppingsBreadcrumb progress={this.state.progress} />
+            {this.state.progress[0] ? (
+              <ToppingsBreadcrumb progress={this.state.progress} />
+            ) : (
+              <div />
+            )}
             <Button
               type="button"
               className="btn btn-success float-left"

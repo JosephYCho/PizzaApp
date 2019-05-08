@@ -41,9 +41,7 @@ class PizzaHeader extends React.Component {
           </div>
 
           <br />
-          {/* <PizzaList /> */}
           <Route path="/pizzas/createpizza"
-          //  component={PizzaForm} 
           render={(props) =><PizzaForm {...props} onAdd={this.props.onAdd} toppings={this.props.toppings} modal={this.state.modal} toggle={this.toggle} />}
            />
         </div>

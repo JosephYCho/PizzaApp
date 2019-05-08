@@ -29,6 +29,7 @@ namespace oforce_interview
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            services.AddSingleton<ICacheService, MemoryCacheDefault>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IPizzaService, PizzaService>();
             services.AddSingleton<IPizzaToppingService, PizzaToppingService>();

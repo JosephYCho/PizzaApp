@@ -81,24 +81,24 @@ namespace oforce_interview.Controllers
             return result;
         }
 
-        /*
-        [HttpGet("toppings/{id:int}")]
-        public ActionResult<ItemResponse<Pizzas>> GetPizzaAndToppingById(int id)
+        
+        [HttpGet("toppings")]
+        public ActionResult<ItemsResponse<Pizzas>> GetPizzaAndToppingById()
         {
-            ItemResponse<Pizzas> response = null;
+            ItemsResponse<Pizzas> response = null;
             ActionResult result = null;
 
             try
             {
-                Pizzas pizza = _pizzaService.GetPizzaAndToppingById(id);
-                if (pizza == null)
+                List<Pizzas> pizzas = _pizzaService.GetPizzaAndToppingById();
+                if (pizzas == null)
                 {
                     result = NotFound();
                 }
                 else
                 {
-                    response = new ItemResponse<Pizzas>();
-                    response.Item = pizza;
+                    response = new ItemsResponse<Pizzas>();
+                    response.Items = pizzas;
                     result = Ok(response);
 
 
@@ -112,7 +112,7 @@ namespace oforce_interview.Controllers
             return result;
         }
 
-    */
+    
 
         [HttpPost]
         public ActionResult<ItemResponse<int>> Insert(PizzaInsertRequest req)

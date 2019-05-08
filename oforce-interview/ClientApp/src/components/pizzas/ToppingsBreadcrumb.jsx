@@ -2,22 +2,18 @@ import React from "react";
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 
 const toppingsBreadcrumb = ({ progress }) => {
- const mapProgress = progress.map((progress,index)=>(
+  const mapProgress = progress.map((oneProgress, index) => (
+    <BreadcrumbItem key={index}>
+      <a href="#">{oneProgress}</a>
+    </BreadcrumbItem>
+  ));
 
-       <BreadcrumbItem key={index}>
-     <a>{progress}</a>
-   </BreadcrumbItem>
-    
-   
- ));
-
- return(
+  return (
     <Breadcrumb>
-      <BreadcrumbItem>Added:</BreadcrumbItem>
-        {mapProgress}
-      </Breadcrumb>
- )
-  
+      <BreadcrumbItem>Added</BreadcrumbItem>
+      {mapProgress}
+    </Breadcrumb>
+  );
 };
 
 export default React.memo(toppingsBreadcrumb);

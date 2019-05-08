@@ -11,7 +11,7 @@ namespace oforce_interview.Services.Interfaces
     {
         List<Pizzas> GetAllWithToppings();
         Pizzas Get(int id);
-        Pizzas GetPizzaAndToppingById(int id);
+        List<Pizzas> GetPizzaAndToppingById();
         int Insert(PizzaInsertRequest req);
         void Update(PizzaUpdateRequest req);
         void Delete(int id);
