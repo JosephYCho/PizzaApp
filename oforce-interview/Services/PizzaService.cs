@@ -134,7 +134,7 @@ namespace oforce_interview.Services
             }
         }
 
-        private static Dictionary<int, List<string>> ToppingDict = new Dictionary<int, List<string>>();
+        //private static Dictionary<int, List<string>> ToppingDict = new Dictionary<int, List<string>>();
 
         public List<Pizzas> GetAllWithToppings()
         {
@@ -162,14 +162,14 @@ namespace oforce_interview.Services
                         pizza.DateCreated = reader.GetDateTime(index++);
                         pizza.DateModified = reader.GetDateTime(index++);
 
-                        if (!ToppingDict.ContainsKey(pizza.Id))
-                        {
-                            ToppingDict[pizza.Id] = new List<string>();
-                            toppings = GetToppingsById(pizza.Id);
-                        }
-                        //toppings = GetToppingsById(pizza.Id);
+                      //  if (!ToppingDict.ContainsKey(pizza.Id))
+                       // {
+                         //   ToppingDict[pizza.Id] = new List<string>();
+                       //     //toppings = GetToppingsById(pizza.Id);
+                       // }
+                        toppings = GetToppingsById(pizza.Id);
 
-                        ToppingDict[pizza.Id] = toppings;
+                        //ToppingDict[pizza.Id] = toppings;
                         pizza.Toppings = toppings;
 
                         if (pizzas == null)

@@ -36,7 +36,7 @@ export class Pizza extends React.Component {
 
   getAllPizzas = () => {
     pizzaService
-      .getAll()
+      .getAllPizzaWithToppings()
       .then(this.getAllPizzasSuccess)
       .catch(this.onAxiosFail);
   };
@@ -53,11 +53,23 @@ export class Pizza extends React.Component {
     console.log(error);
   };
 
+  getDate = longDate => {
+    let date = new Date(longDate);
+    return (
+      date.getUTCMonth() +
+      1 +
+      "/" +
+      date.getUTCDate() +
+      "/" +
+      date.getFullYear()
+    );
+  };
+
   render() {
     return (
       <div>
         <PizzaHeader toppings={this.state.toppings} />
-        <PizzaList pizzas />
+        <PizzaList pizzas={this.state.pizzas} getDate={this.getDate} />
       </div>
     );
   }

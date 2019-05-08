@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as helpers from "./serviceHelpers";
 
-const getAll = () => {
+const getAllPizzaWithToppings = () => {
   const config = {
     method: "GET",
     url: helpers.API_HOST_PREFIX + "api/pizzas",
@@ -75,4 +75,4 @@ const deletePizza = id => {
     .catch(helpers.onGlobalError);
 };
 
-export { getAll, getById, getPizzaAndToppingsById, insertPizza, updatePizza, deletePizza };
+export { getAllPizzaWithToppings, getById, getPizzaAndToppingsById, insertPizza, updatePizza, deletePizza };
