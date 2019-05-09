@@ -40,17 +40,17 @@ class AddToppingsToPizzaModal extends React.Component {
 
   handleChange = e => {
     const value = JSON.parse(e.target.value);
-
+    console.log(value)
     this.setState({
-      selectedValue: value.id,
+      selectedValue: e.target.id,
       selectedTopping: value.name
     });
   };
 
   mapTopping = toppings => {
-    console.log("inside");
+    
     const toppingList = toppings.map(topping => (
-      <option key={topping.id} value={JSON.stringify(topping)}>
+      <option key={topping.id} value={topping.id}>
         {topping.name}
       </option>
     ));
