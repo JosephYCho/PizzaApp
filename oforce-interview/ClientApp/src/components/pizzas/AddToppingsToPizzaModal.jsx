@@ -17,6 +17,7 @@ class AddToppingsToPizzaModal extends React.Component {
     toppingMapped: [],
     toppings: [],
     selectedTopping: "",
+    selectedId:null,
     progress: [],
     modal: true,
     disable: true
@@ -40,17 +41,18 @@ class AddToppingsToPizzaModal extends React.Component {
 
   handleChange = e => {
     const value = JSON.parse(e.target.value);
-    console.log(value)
+  
     this.setState({
-      selectedValue: e.target.id,
-      selectedTopping: value.name
+      selectedValue: e.target.value,
+      selectedTopping: value.name,
+      selectedId: value.id
     });
   };
 
   mapTopping = toppings => {
     
     const toppingList = toppings.map(topping => (
-      <option key={topping.id} value={topping.id}>
+      <option key={topping.id} value={JSON.stringify(topping)}>
         {topping.name}
       </option>
     ));
@@ -75,12 +77,14 @@ class AddToppingsToPizzaModal extends React.Component {
   };
 
   handleAdd = () => {
-    const id = Number(this.state.selectedValue);
+    const id = this.state.selectedId;
+    const pizzaId = this.state.pizzaId;
+    
     const data = {
-      pizzaId: this.state.pizzaId,
+      pizzaId: pizzaId,
       toppingId: id
     };
-    console.log(data);
+    
     pizzaToppingService
       .insertToppingToPizza(data)
       .then(this.onInsertSuccess)

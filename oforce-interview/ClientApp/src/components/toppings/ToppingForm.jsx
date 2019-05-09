@@ -73,7 +73,8 @@ class ToppingForm extends React.Component {
 
   clearForm = () => {
     this.setState({
-      
+      id: null,
+      name: "",
       errors: {
         ...this.state.errors,
         name: false
@@ -81,17 +82,16 @@ class ToppingForm extends React.Component {
     });
   };
 
-   handleSubmit= e => {
+  handleSubmit = e => {
     e.preventDefault();
     const updateId = this.state.id;
     const { id, name } = this.state;
 
     this.props.id
       ? this.props.handleUpdate({ id, name }, updateId)
-      : this.props.handleInsert({ name })
+      : this.props.handleInsert({ name });
 
-      this.clearForm();
-
+    this.clearForm();
   };
 
   render() {
