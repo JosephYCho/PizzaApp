@@ -3,7 +3,6 @@ import MapToppings from "./MapToppings";
 import { Card, CardBody, CardTitle, Table } from "reactstrap";
 
 
-  // make to functional component
   const toppingList=({toppings,onUpdateClick,onDeleteClick})=>{
 
     return (

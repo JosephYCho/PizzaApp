@@ -14,7 +14,6 @@ export default class App extends Component {
   render() {
     return (
       <Layout>
-        <Route exact path="/" component={Home} />
         <Route path="/toppings" component={Topping} />
         <Route path="/pizzas" component={Pizza} />
       </Layout>

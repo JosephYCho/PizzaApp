@@ -37,15 +37,6 @@ class AddToppingsToPizzaModal extends React.Component {
     });
   };
 
-  clearForm = () => {
-    this.setState({
-      name: "",
-      error: {
-        ...this.state.errors,
-        name: false
-      }
-    });
-  };
 
   handleChange = e => {
     const value = JSON.parse(e.target.value);

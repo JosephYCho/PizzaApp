@@ -131,7 +131,6 @@ export class Pizza extends React.Component {
       .updatePizza(data, id)
       .then(this.onUpdateSuccess)
       .then(this.onSuccessRoute)
-      //.then(()=>this.routeToAddToppings(id))
       .catch(this.onAxiosFail);
   };
 

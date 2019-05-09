@@ -74,6 +74,7 @@ const deletePizza = id => {
   };
   return axios(config)
     .then(helpers.onGlobalSuccess)
+    .then(()=>id)
     .catch(helpers.onGlobalError);
 };
 

@@ -40,9 +40,7 @@ class PizzaDisplay extends React.PureComponent{
                   >
                     Delete
                   </Button>
-                  {/* <Button close aria-label="Cancel">
-                    <span aria-hidden>&ndash;</span>
-                  </Button> */}
+                 
                 </div>
               </td>
             </tr>

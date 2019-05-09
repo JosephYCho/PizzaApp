@@ -45,9 +45,7 @@ class ToppingDisplay extends React.PureComponent {
               >
                 Update
               </Button>
-              {/* <Button close aria-label="Cancel">
-                <span aria-hidden>&ndash;</span>
-              </Button> */}
+              
             </div>
           </td>
         </tr>
