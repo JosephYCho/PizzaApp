@@ -1,7 +1,7 @@
 import React from 'react';
 import PizzaDisplay from './PizzaDisplay';
 
-const mapPizzas = ({pizzas,getDate, onDelete})=>{
+const mapPizzas = ({pizzas,getDate, onDeleteClick,onUpdateClick})=>{
     const mapPizzas = pizzas.map((pizza)=>(
         <PizzaDisplay
             key={pizza.id}
@@ -9,7 +9,8 @@ const mapPizzas = ({pizzas,getDate, onDelete})=>{
             toppings={pizza.toppings}
             id={pizza.id}
             getDate={getDate}
-            onDelete={onDelete}
+            onDeleteClick={onDeleteClick}
+            onUpdateClick={onUpdateClick}
             
 
         />

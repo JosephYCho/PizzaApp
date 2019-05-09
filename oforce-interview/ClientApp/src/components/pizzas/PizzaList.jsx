@@ -1,7 +1,7 @@
 import React from "react";
 import MapPizzas from "./MapPizzas";
 
-const pizzaList = ({ pizzas, getDate,onDelete }) => {
+const pizzaList = ({ pizzas, getDate,onDeleteClick,onUpdateClick }) => {
   const pizzaList = (
     <div className="d-flex no-block">
       <div className="col-md-12">
@@ -16,7 +16,7 @@ const pizzaList = ({ pizzas, getDate,onDelete }) => {
               </tr>
             </thead>
             <tbody>
-              <MapPizzas pizzas={pizzas} getDate={getDate} onDelete={onDelete} />
+              <MapPizzas pizzas={pizzas} getDate={getDate} onUpdateClick={onUpdateClick} onDeleteClick={onDeleteClick} />
             </tbody>
           </table>
         </div>

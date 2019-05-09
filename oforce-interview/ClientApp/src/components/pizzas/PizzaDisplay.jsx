@@ -3,13 +3,14 @@ import {Button} from 'reactstrap';
 
 class PizzaDisplay extends React.PureComponent{
 
-  componentDidMount(){
-    console.log(this.props.pizza)
+  handleDelete=()=>{
+    this.props.onDeleteClick(this.props.id)
   }
 
-  handleDelete=()=>{
-    this.props.onDelete(this.props.id)
+  handleUpdate=()=>{
+    this.props.onUpdateClick(this.props.pizza);
   }
+
     render(){
         return(
             <React.Fragment>
@@ -23,6 +24,14 @@ class PizzaDisplay extends React.PureComponent{
             </td>
               <td className="toppingBtn">
                 <div className="row justify-content-center">
+                  <Button
+                    outline
+                    color="secondary"
+                    size="sm"
+                    onClick={this.handleUpdate}
+                  >
+                    Update
+                  </Button>
                   <Button
                     outline
                     color="danger"

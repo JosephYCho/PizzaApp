@@ -2,9 +2,10 @@ import React from "react";
 import MapToppings from "./MapToppings";
 import { Card, CardBody, CardTitle, Table } from "reactstrap";
 
-class ToppingList extends React.Component {
+
   // make to functional component
-  render() {
+  const toppingList=({toppings,onUpdateClick,onDeleteClick})=>{
+
     return (
       <div className="ToppingListContainer">
         <Card>
@@ -19,7 +20,7 @@ class ToppingList extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                <MapToppings toppings={this.props.toppings} onUpdateClick={this.props.onUpdateClick} onDeleteClick={this.props.onDeleteClick}/>
+                <MapToppings toppings={toppings} onUpdateClick={onUpdateClick} onDeleteClick={onDeleteClick}/>
               </tbody>
             </Table>
           </CardBody>
@@ -27,6 +28,6 @@ class ToppingList extends React.Component {
       </div>
     );
   }
-}
+  
 
-export default ToppingList;
+export default React.memo(toppingList);

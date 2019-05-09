@@ -19,10 +19,11 @@ class AddToppingsToPizzaModal extends React.Component {
     selectedTopping: "",
     progress: [],
     modal: true,
-    disable:true
+    disable: true
   };
 
   componentDidMount() {
+    this.props.setModal(true);
     this.updateMappedToppings(this.props.toppings);
   }
 
@@ -77,7 +78,7 @@ class AddToppingsToPizzaModal extends React.Component {
 
   handleProgress = name => {
     this.setState({
-      disable:false,
+      disable: false,
       progress: [...this.state.progress, name]
     });
   };
@@ -108,7 +109,6 @@ class AddToppingsToPizzaModal extends React.Component {
 
   handleSubmit = () => {
     this.props.onAdd(this.props.location.state.id);
-    this.props.history.push("/pizzas");
 
     this.props.toggle();
   };
@@ -116,17 +116,16 @@ class AddToppingsToPizzaModal extends React.Component {
   render() {
     return (
       <Modal
-        isOpen={this.state.modal}
+        isOpen={this.props.modal}
         modalTransition={{ timeout: 150 }}
         backdropTransition={{ timeout: 100 }}
         toggle={this.props.toggle}
         fade={true}
-        toppings={this.props.toppings}
       >
         <ModalHeader toggle={this.props.toggle}>Add Toppings</ModalHeader>
-        <ModalBody toppings={this.props.toppings}>
-          <Form toppings={this.props.toppings}>
-            <FormGroup toppings={this.props.toppings}>
+        <ModalBody>
+          <Form>
+            <FormGroup>
               <select
                 className="custom-select"
                 value={this.state.selectedValue}

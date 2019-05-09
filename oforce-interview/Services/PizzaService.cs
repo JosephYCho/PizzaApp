@@ -202,7 +202,7 @@ namespace oforce_interview.Services
             using (var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "dbo.Pizzas_Update";
+                cmd.CommandText = "dbo.Pizzas_Update_V2";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", req.Id);
                 cmd.Parameters.AddWithValue("@Name", req.Name);

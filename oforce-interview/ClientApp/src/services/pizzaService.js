@@ -60,6 +60,8 @@ const updatePizza = (data, id) => {
   };
   return axios(config)
     .then(helpers.onGlobalSuccess)
+    .then(()=> data)
+    .then(()=>id)
     .catch(helpers.onGlobalError);
 };
 

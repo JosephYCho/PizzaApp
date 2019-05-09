@@ -1,6 +1,5 @@
 import React from "react";
 import PizzaHeader from "./PizzaHeader";
-import * as pizzaToppingService from "../../services/pizzaToppingService";
 import * as pizzaService from "../../services/pizzaService";
 import * as toppingService from "../../services/toppingService";
 import PizzaList from "./PizzaList";
@@ -8,7 +7,10 @@ import PizzaList from "./PizzaList";
 export class Pizza extends React.Component {
   state = {
     pizzas: [],
-    toppings: []
+    toppings: [],
+    id: null,
+    name:"",
+    modal: false
   };
 
   componentDidMount() {
@@ -18,6 +20,17 @@ export class Pizza extends React.Component {
   onLoadPage = () => {
     this.getAllToppings();
     this.getAllPizzas();
+  };
+
+  toggle = () => {
+    this.props.history.push(`/pizzas`);
+  };
+
+  setModal = modal => {
+    this.setState({ modal });
+  };
+  closeRoutePath = () => {
+    this.props.history.push(`/pizzas`);
   };
 
   getAllToppings = () => {
@@ -53,19 +66,36 @@ export class Pizza extends React.Component {
     console.log(error);
   };
 
-  getById= id =>{
-    pizzaService.getById(id)
-    .then(this.onGetByIdSuccess)
-    .catch(this.onAxiosFail)
-  }
+  getById = id => {
+    pizzaService
+      .getById(id)
+      .then(this.onGetByIdSuccess)
+      .catch(this.onAxiosFail);
+  };
 
-  onGetByIdSuccess = response =>{
-    //const pizzas = [...this.state.pizzas, response.item]
-    const pizzas =[response.item, ...this.state.pizzas]
+  onGetByIdSuccess = response => {
+    const pizzas = [response.item, ...this.state.pizzas];
     this.setState({
       pizzas
-    })
-  }
+    });
+  };
+
+  handlePizzaInsert = data => {
+    pizzaService
+      .insertPizza(data)
+      .then(this.onInsertSuccess)
+      .catch(this.onInsertFail);
+  };
+
+  onInsertSuccess = response => {
+    console.log(response);
+    const id = response.item;
+    this.routeToAddToppings(id);
+  };
+
+  routeToAddToppings = id => {
+    this.props.history.push("/pizzas/createpizza/addtoppings", { id:id });
+  };
 
   getDate = longDate => {
     let date = new Date(longDate);
@@ -79,32 +109,87 @@ export class Pizza extends React.Component {
     );
   };
 
-  handleDelete=(id)=>{
-    pizzaService.deletePizza(id)
-    .then(this.onDeleteSuccess)
-    .then(()=>this.removeDeletedPizza(id))
-    .catch(this.onAxiosFail)
-  }
+  onUpdateClick = data => {
+    this.setState(
+      {
+        id: data.id,
+        name: data.name
+      },
+      this.routeToUpdatePizza
+    );
+  };
 
-  onDeleteSuccess = (response) =>{
-    console.log(response)
-  }
+  routeToUpdatePizza = () => {
+    const id = this.state.id;
+    const name = this.state.name;
+    this.props.history.push("/pizzas/createpizza", { id: id, name: name });
+  };
 
-  removeDeletedPizza = id =>{
-    this.setState(prevState=>{
-      const updatedArr = prevState.pizzas.filter(pizza=>{
-        return pizza.id !== id
+  
+  handleUpdate = (data, id) => {
+    pizzaService
+      .updatePizza(data, id)
+      .then(this.onUpdateSuccess)
+      .then(this.onSuccessRoute)
+      //.then(()=>this.routeToAddToppings(id))
+      .catch(this.onAxiosFail);
+  };
+
+  onUpdateSuccess = data => {
+    console.log(data);
+    this.setState(prevState => {
+      let index = prevState.pizzas.findIndex(pizza => pizza.id === data.id);
+      let newArr = prevState.toppings.slice();
+      newArr[index] = data;
+      const pizzas = newArr;
+      return { pizzas };
+    });
+  };
+
+  onSuccessRoute = id => {
+    console.log(id);
+    this.routeToAddToppings(id);
+  };
+
+  handleDelete = id => {
+    pizzaService
+      .deletePizza(id)
+      .then(this.onDeleteSuccess)
+      .then(() => this.removeDeletedPizza(id))
+      .catch(this.onAxiosFail);
+  };
+
+  onDeleteSuccess = response => {
+    console.log(response);
+  };
+
+  removeDeletedPizza = id => {
+    this.setState(prevState => {
+      const updatedArr = prevState.pizzas.filter(pizza => {
+        return pizza.id !== id;
       });
-      return{pizzas:updatedArr}
-    })
-  }
-
+      return { pizzas: updatedArr };
+    });
+  };
 
   render() {
     return (
       <div>
-        <PizzaHeader toppings={this.state.toppings} onAdd={this.getById} />
-        <PizzaList pizzas={this.state.pizzas} getDate={this.getDate} onDelete={this.handleDelete} />
+        <PizzaHeader
+          toppings={this.state.toppings}
+          onAdd={this.getById}
+          handleUpdate={this.handleUpdate}
+          handlePizzaInsert={this.handlePizzaInsert}
+          modal={this.state.modal}
+          toggle={this.toggle}
+          setModal={this.setModal}
+        />
+        <PizzaList
+          pizzas={this.state.pizzas}
+          getDate={this.getDate}
+          onUpdateClick={this.onUpdateClick}
+          onDeleteClick={this.handleDelete}
+        />
       </div>
     );
   }

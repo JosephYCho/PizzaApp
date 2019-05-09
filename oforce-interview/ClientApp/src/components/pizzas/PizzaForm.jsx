@@ -11,19 +11,36 @@ import {
   FormText,
   FormFeedback
 } from "reactstrap";
-import * as pizzaService from "../../services/pizzaService";
 import { Route } from "react-router-dom";
 import AddToppingToPizzaModal from "./AddToppingsToPizzaModal";
 
 export class PizzaForm extends React.Component {
   state = {
+    id: null,
     name: "",
-    modal: null,
     errors: {
       name: false
     }
   };
 
+  componentDidMount() {
+    this.onPageLoad();
+  }
+
+  onPageLoad = () => {
+    console.log("dsafasdf");
+    if (this.props.location.state) {
+      this.setState(
+        {
+          id: this.props.location.state.id,
+          name: this.props.location.state.name
+        },
+        () => this.props.setModal(true)
+      );
+    } else {
+      this.props.setModal(true);
+    }
+  };
 
   handleChange = e => {
     const name = e.target.name;
@@ -69,28 +86,13 @@ export class PizzaForm extends React.Component {
     });
   };
 
-  routeToAddToppings = id => {
-    this.props.history.push("/pizzas/createpizza/addtoppings", { id: id });
-  };
-
   handleClick = () => {
-    const { name } = this.state;
-    pizzaService
-      .insertPizza({ name })
-      .then(this.onInsertSuccess)
-      .then(this.clearForm)
-      .catch(this.onInsertFail);
-  };
-
-  onInsertSuccess = response => {
-    console.log(response);
-    const id = response.item;
-    //this.props.onAdd(id);
-    this.routeToAddToppings(id);
-  };
-
-  onInsertFail = error => {
-    console.log(error);
+    const { id, name } = this.state;
+    if (this.props.pizzaId) {
+      this.props.handleUpdate({ id, name }, this.state.id);
+    } else {
+      this.props.handlePizzaInsert({ name });
+    }
   };
 
   render() {
@@ -131,6 +133,8 @@ export class PizzaForm extends React.Component {
                   onAdd={this.props.onAdd}
                   toppings={this.props.toppings}
                   toggle={this.props.toggle}
+                  modal={this.props.modal}
+                  setModal={this.props.setModal}
                 />
               )}
             />

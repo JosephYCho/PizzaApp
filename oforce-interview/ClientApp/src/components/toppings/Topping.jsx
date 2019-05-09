@@ -1,6 +1,5 @@
 import React from "react";
 import * as toppingService from "../../services/toppingService";
-import { Route } from "react-router-dom";
 import ToppingForm from "./ToppingForm";
 import ToppingList from "./ToppingList";
 
@@ -76,7 +75,7 @@ export class Topping extends React.Component {
     console.log(error);
   };
 
-  onUpdate = data => {
+  onUpdateClick = data => {
     this.setState({
       name: data.name,
       id: data.id
@@ -87,7 +86,6 @@ export class Topping extends React.Component {
     toppingService
       .updateTopping(data, id)
       .then(this.onUpdateSuccess)
-      .then()
       .catch(this.onAxiosFail);
   };
 
@@ -134,7 +132,7 @@ export class Topping extends React.Component {
         <ToppingList
           toppings={this.state.toppings}
           onDeleteClick={this.handleDelete}
-          onUpdateClick={this.onUpdate}
+          onUpdateClick={this.onUpdateClick}
         />
       </div>
     );

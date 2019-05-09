@@ -4,19 +4,9 @@ import { withRouter } from "react-router-dom";
 
 import { PizzaForm } from "./PizzaForm";
 
-class PizzaHeader extends React.Component {
-  state={
-    modal:false
-  }
-
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal
-    });
-  };
+class PizzaHeader extends React.PureComponent {
   handleClick = () => {
     this.props.history.push("/pizzas/createpizza");
-    this.toggle();
   };
 
   render() {
@@ -41,9 +31,24 @@ class PizzaHeader extends React.Component {
           </div>
 
           <br />
-          <Route path="/pizzas/createpizza"
-          render={(props) =><PizzaForm {...props} onAdd={this.props.onAdd} toppings={this.props.toppings} modal={this.state.modal} toggle={this.toggle} />}
-           />
+          <Route
+            
+            path="/pizzas/createpizza"
+            render={props => (
+              <PizzaForm
+                {...props}
+                handlePizzaInsert={this.props.handlePizzaInsert}
+                handleUpdate={this.props.handleUpdate}
+                onAdd={this.props.onAdd}
+                toppings={this.props.toppings}
+                modal={this.props.modal}
+                toggle={this.props.toggle}
+                pizzaId={this.props.pizzaId}
+                pizzaName={this.props.pizzaName}
+                setModal={this.props.setModal}
+              />
+            )}
+          />
         </div>
       </div>
     );
