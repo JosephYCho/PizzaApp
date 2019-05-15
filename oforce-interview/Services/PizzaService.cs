@@ -16,7 +16,9 @@ namespace oforce_interview.Services
     {
         private IConfiguration _connectionString;
         private ICacheService _cacheService;
-        private static Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
+        //private static Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
+       // private static Dictionary<int, List<string>> dict = null;
+
         private static readonly MemoryCache cache = new MemoryCache(new MemoryCacheOptions());
         private static readonly string key = "Pizza_CacheData_";
 
@@ -64,6 +66,7 @@ namespace oforce_interview.Services
             List<Pizzas> pizzas = null;
             Pizzas pizza = null;
             List<string> toppings = null;
+            Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
 
             using (var con = GetConnection())
             {
@@ -100,10 +103,15 @@ namespace oforce_interview.Services
                             string topping = reader.GetString(index++);
                             if (toppings == null)
                             {
-                                dict[pizzaId] = new List<string>();
+                            //dict[pizzaId] = new List<string>();
+                            toppings = new List<string>();
                             }
 
-                            if(topping != null)
+                        if (!dict.ContainsKey(pizzaId))
+                        {
+                            dict[pizzaId] = new List<string>();
+                        }
+                        if (topping != null)
                             {
                                 dict[pizzaId].Add(topping);
                             }       
@@ -124,12 +132,16 @@ namespace oforce_interview.Services
             }
         }
 
+        
         //not in use anymore
         public List<Pizzas> GetAllWithToppings()
         {
             Pizzas pizza = null;
             List<string> toppings = null;
             List<Pizzas> pizzas = null;
+            Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
+
+
 
             using (var con = GetConnection())
             {
@@ -174,7 +186,7 @@ namespace oforce_interview.Services
         }
 
 
-
+    
 
 
         public int Insert(PizzaInsertRequest req)

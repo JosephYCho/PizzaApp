@@ -22,7 +22,7 @@ namespace oforce_interview.Controllers
         }
 
       
-
+        // not in use anymore
         [HttpGet]
         public ActionResult<ItemsResponse<Pizzas>> GetAll()
         {
@@ -50,6 +50,7 @@ namespace oforce_interview.Controllers
             }
             return result;
         }
+        
 
         [HttpGet("{id:int}")]
         public ActionResult<ItemResponse<Pizzas>> GetById(int id)
