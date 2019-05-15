@@ -84,14 +84,14 @@ namespace oforce_interview.Controllers
 
         
         [HttpGet("toppings")]
-        public ActionResult<ItemsResponse<Pizzas>> GetPizzaAndToppingById()
+        public ActionResult<ItemsResponse<Pizzas>> GetPizzaAndTopping()
         {
             ItemsResponse<Pizzas> response = null;
             ActionResult result = null;
 
             try
             {
-                List<Pizzas> pizzas = _pizzaService.GetPizzaAndToppingById();
+                List<Pizzas> pizzas = _pizzaService.GetPizzaAndTopping();
                 if (pizzas == null)
                 {
                     result = NotFound();

@@ -61,7 +61,7 @@ namespace oforce_interview.Services
 
 
 
-        public List<Pizzas> GetPizzaAndToppingById()
+        public List<Pizzas> GetPizzaAndTopping()
         {
             List<Pizzas> pizzas = null;
             Pizzas pizza = null;

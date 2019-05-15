@@ -84,7 +84,7 @@ export class Pizza extends React.Component {
         pizzas
       });
     } else{
-      this.onUpdateSuccess(response.item)
+      this.displayUpdatedPizza(response.item)
     }
   };
 
@@ -137,13 +137,11 @@ export class Pizza extends React.Component {
   handleUpdate = (data, id) => {
     pizzaService
       .updatePizza(data, id)
-      //.then(this.onUpdateSuccess)
-      .then(() => this.onSuccessRoute(id))
+      .then(() => this.onUpdateSuccess(id))
       .catch(this.onAxiosFail);
   };
 
-  onUpdateSuccess = data => {
-    //console.log(data);
+  displayUpdatedPizza = data => {
     this.setState(prevState => {
       let index = prevState.pizzas.findIndex(pizza => pizza.id === data.id);
       let newArr = prevState.pizzas.slice();
@@ -153,7 +151,7 @@ export class Pizza extends React.Component {
     });
   };
 
-  onSuccessRoute = id => {
+  onUpdateSuccess = id => {
     console.log(id);
     this.routeToAddToppings(id);
   };
