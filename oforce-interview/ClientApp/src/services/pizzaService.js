@@ -4,7 +4,7 @@ import * as helpers from "./serviceHelpers";
 const getAllPizzaWithToppings = () => {
   const config = {
     method: "GET",
-    url: helpers.API_HOST_PREFIX + "api/pizzas/toppings",
+    url: helpers.API_HOST_PREFIX + "api/pizzas",
     crossdomain: true,
     headers: { "Content-Type": "application/json" }
   };

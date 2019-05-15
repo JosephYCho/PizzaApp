@@ -9,8 +9,9 @@ export class Pizza extends React.Component {
     pizzas: [],
     toppings: [],
     id: null,
-    name:"",
-    modal: false
+    name: "",
+    modal: false,
+    isUpdating: false
   };
 
   componentDidMount() {
@@ -67,17 +68,24 @@ export class Pizza extends React.Component {
   };
 
   getById = id => {
-    pizzaService
-      .getById(id)
-      .then(this.onGetByIdSuccess)
-      .catch(this.onAxiosFail);
+    
+      pizzaService
+        .getById(id)
+        .then(this.onGetByIdSuccess)
+        .catch(this.onAxiosFail);
+   
   };
 
   onGetByIdSuccess = response => {
-    const pizzas = [response.item, ...this.state.pizzas];
-    this.setState({
-      pizzas
-    });
+    if(!this.state.isUpdating){
+
+      const pizzas = [response.item, ...this.state.pizzas];
+      this.setState({
+        pizzas
+      });
+    } else{
+      this.onUpdateSuccess(response.item)
+    }
   };
 
   handlePizzaInsert = data => {
@@ -94,7 +102,7 @@ export class Pizza extends React.Component {
   };
 
   routeToAddToppings = id => {
-    this.props.history.push("/pizzas/createpizza/addtoppings", { id:id });
+    this.props.history.push("/pizzas/createpizza/addtoppings", { id: id });
   };
 
   getDate = longDate => {
@@ -113,7 +121,8 @@ export class Pizza extends React.Component {
     this.setState(
       {
         id: data.id,
-        name: data.name
+        name: data.name,
+        isUpdating: true
       },
       this.routeToUpdatePizza
     );
@@ -125,23 +134,22 @@ export class Pizza extends React.Component {
     this.props.history.push("/pizzas/createpizza", { id: id, name: name });
   };
 
-  
   handleUpdate = (data, id) => {
     pizzaService
       .updatePizza(data, id)
-      .then(this.onUpdateSuccess)
-      .then(this.onSuccessRoute)
+      //.then(this.onUpdateSuccess)
+      .then(() => this.onSuccessRoute(id))
       .catch(this.onAxiosFail);
   };
 
   onUpdateSuccess = data => {
-    console.log(data);
+    //console.log(data);
     this.setState(prevState => {
       let index = prevState.pizzas.findIndex(pizza => pizza.id === data.id);
-      let newArr = prevState.toppings.slice();
+      let newArr = prevState.pizzas.slice();
       newArr[index] = data;
       const pizzas = newArr;
-      return { pizzas };
+      return { pizzas, isUpdating:false };
     });
   };
 
@@ -182,6 +190,7 @@ export class Pizza extends React.Component {
           modal={this.state.modal}
           toggle={this.toggle}
           setModal={this.setModal}
+          pizzaId={this.state.id}
         />
         <PizzaList
           pizzas={this.state.pizzas}

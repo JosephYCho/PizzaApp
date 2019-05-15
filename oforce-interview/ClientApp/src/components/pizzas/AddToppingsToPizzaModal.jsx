@@ -70,6 +70,7 @@ class AddToppingsToPizzaModal extends React.Component {
   };
 
   handleProgress = name => {
+    
     this.setState({
       disable: false,
       progress: [...this.state.progress, name]
