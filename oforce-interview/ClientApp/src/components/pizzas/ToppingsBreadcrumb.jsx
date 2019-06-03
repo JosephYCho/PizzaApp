@@ -4,7 +4,7 @@ import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 const toppingsBreadcrumb = ({ progress }) => {
   const mapProgress = progress.map((oneProgress, index) => (
     <BreadcrumbItem key={index}>
-      <a href="#">{oneProgress}</a>
+      <a href="#">{oneProgress.name}</a>
     </BreadcrumbItem>
   ));
 

@@ -41,6 +41,8 @@ namespace oforce_interview.Services
 
                         topping.Id = reader.GetInt32(index++);
                         topping.Name = reader.GetString(index++);
+                        topping.ToppingImage = reader.GetString(index++);
+                        topping.isSauce = reader.GetBoolean(index++);
                         topping.DateCreated = reader.GetDateTime(index++);
                         topping.DateModified = reader.GetDateTime(index++);
 
@@ -76,6 +78,8 @@ namespace oforce_interview.Services
 
                         topping.Id = reader.GetInt32(index++);
                         topping.Name = reader.GetString(index++);
+                        topping.ToppingImage = reader.GetString(index++);
+                        topping.isSauce = reader.GetBoolean(index++);
                         topping.DateCreated = reader.GetDateTime(index++);
                         topping.DateModified = reader.GetDateTime(index++);
                     }
@@ -94,6 +98,8 @@ namespace oforce_interview.Services
                 cmd.CommandText = "dbo.Toppings_Insert";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Name", req.Name);
+                cmd.Parameters.AddWithValue("@ToppingImage", req.ToppingImage);
+                cmd.Parameters.AddWithValue("@IsSauce", req.isSauce);
                 cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                 cmd.ExecuteNonQuery();
@@ -113,6 +119,8 @@ namespace oforce_interview.Services
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", req.Id);
                 cmd.Parameters.AddWithValue("@Name", req.Name);
+                cmd.Parameters.AddWithValue("@ToppingImage", req.ToppingImage);
+                cmd.Parameters.AddWithValue("@IsSauce", req.isSauce);
 
                 cmd.ExecuteNonQuery();
 

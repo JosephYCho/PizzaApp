@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
 import * as pizzaToppingService from "../../services/pizzaToppingService";
 import ToppingsBreadcrumb from "./ToppingsBreadcrumb";
+import PizzaAnimation from "./PizzaAnimation";
 
 class AddToppingsToPizzaModal extends React.Component {
   state = {
@@ -17,12 +18,11 @@ class AddToppingsToPizzaModal extends React.Component {
     toppingMapped: [],
     toppings: [],
     selectedTopping: "",
-    selectedId:null,
+    selectedId: null,
     progress: [],
-    modal: true,
+    // modal: true,
     disable: true
   };
-
   componentDidMount() {
     this.props.setModal(true);
     this.updateMappedToppings(this.props.toppings);
@@ -38,19 +38,17 @@ class AddToppingsToPizzaModal extends React.Component {
     });
   };
 
-
   handleChange = e => {
     const value = JSON.parse(e.target.value);
-  
+
     this.setState({
       selectedValue: e.target.value,
-      selectedTopping: value.name,
+      selectedTopping: value,
       selectedId: value.id
     });
   };
 
   mapTopping = toppings => {
-    
     const toppingList = toppings.map(topping => (
       <option key={topping.id} value={JSON.stringify(topping)}>
         {topping.name}
@@ -70,22 +68,24 @@ class AddToppingsToPizzaModal extends React.Component {
   };
 
   handleProgress = name => {
-    
-    this.setState({
-      disable: false,
-      progress: [...this.state.progress, name]
-    });
+    if (this.state.selectedId) {
+      this.setState({
+        disable: false,
+        selectedId:null,
+        progress: [...this.state.progress, name]
+      });
+    }
   };
 
   handleAdd = () => {
     const id = this.state.selectedId;
     const pizzaId = this.state.pizzaId;
-    
+
     const data = {
       pizzaId: pizzaId,
       toppingId: id
     };
-    
+
     pizzaToppingService
       .insertToppingToPizza(data)
       .then(this.onInsertSuccess)
@@ -139,6 +139,8 @@ class AddToppingsToPizzaModal extends React.Component {
             ) : (
               <div />
             )}
+            <PizzaAnimation toppings={this.state.progress} />
+
             <Button
               type="button"
               className="btn btn-success float-left"

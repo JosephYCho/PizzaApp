@@ -9,87 +9,77 @@ import {
   FormFeedback
 } from "reactstrap";
 
+import * as fileUploadService from "../../services/fileUploadService";
+
 class ToppingForm extends React.Component {
   state = {
     id: null,
     name: "",
+    toppingImage: "",
+    isSauce: false,
+    fileValue: null,
     errors: {
       name: false
     }
   };
-  componentDidUpdate(prevProp) {
-    if (this.props.id !== prevProp.id) {
-      this.onPageLoad();
-    }
-  }
 
-  onPageLoad = () => {
-    this.setState({
-      id: this.props.id,
-      name: this.props.name
-    });
-  };
-
-  handleChange = e => {
+  handleChangeCheckbox = e => {
     const name = e.target.name;
-    const value = e.target.value;
-    this.setState(
-      {
-        [name]: value
-      },
-      () => this.validate(name, value)
-    );
+    const value = !this.state.isSauce;
+    this.setState({
+      [name]: value
+    });
   };
 
   validate = (target, value) => {
     if (!value) {
       this.setState({
+        id: null,
+        name: "",
+        toppingImage: "",
+        fileValue: "",
         errors: {
           ...this.state.errors,
-          [target]: true
-        }
-      });
-    } else {
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          [target]: false
+          name: false
         }
       });
     }
   };
-
-  handleTouch = e => {
-    const name = e.target.name;
-    if (!e.target.value) {
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          [name]: true
-        }
-      });
-    }
-  };
-
-  clearForm = () => {
+  handleImage = e => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
     this.setState({
-      id: null,
-      name: "",
-      errors: {
-        ...this.state.errors,
-        name: false
-      }
+      fileValue: e.target.value
+    });
+    fileUploadService
+      .fileUpload(formData)
+      .then(this.onFileUploadSuccess)
+      .catch(this.onFileUploadError);
+  };
+
+  onFileUploadSuccess = response => {
+    console.log(response.item);
+    this.setState({
+      toppingImage: response.item.urlName
     });
   };
 
-  handleSubmit = e => {
+  onFileUploadError = error => {
+    console.log(error);
+  };
+
+  handleSubmit = async e => {
     e.preventDefault();
     const updateId = this.state.id;
-    const { id, name } = this.state;
+    const { id, name, toppingImage, isSauce } = this.state;
 
     this.props.id
-      ? this.props.handleUpdate({ id, name }, updateId)
-      : this.props.handleInsert({ name });
+      ? await this.props.handleUpdate(
+          { id, name, toppingImage, isSauce },
+          updateId
+        )
+      : await this.props.handleInsert({ name, toppingImage, isSauce });
 
     this.clearForm();
   };
@@ -114,6 +104,27 @@ class ToppingForm extends React.Component {
           ) : (
             <FormText>Enter A Topping</FormText>
           )}
+        </FormGroup>
+        <FormGroup tag="fieldset">
+          <FormGroup check>
+            <Label check>
+              <Input
+                type="checkbox"
+                name="isSauce"
+                checked={this.state.isSauce}
+                onChange={this.handleChangeCheckbox}
+              />{" "}
+              Check this if the topping being added is a Sauce or Cheese.
+            </Label>
+          </FormGroup>
+        </FormGroup>
+        <FormGroup>
+          <Label for="file">Upload an Image of the Topping</Label>
+          <Input
+            type="file"
+            value={this.state.fileValue}
+            onChange={this.handleImage}
+          />
         </FormGroup>
         <Button>Submit</Button>
       </Form>

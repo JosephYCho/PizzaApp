@@ -10,5 +10,11 @@ namespace oforce_interview.Domain.Request
     {
         [Required]
         public string Name { get; set; }
+        [Required]
+
+        public string ToppingImage { get; set; }
+        [Required]
+
+        public bool isSauce { get; set; }
     }
 }
