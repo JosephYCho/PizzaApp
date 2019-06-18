@@ -26,6 +26,10 @@ yarn add
 4. Connect to personal connection string in appsetting.json
 5. Press green arrow/IIS Express to build and run the application.
 
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
 
 ## Contact
 Joseph Cho-[LinkedIn](https://www.linkedin.com/in/joseph-cho-056060122/)
