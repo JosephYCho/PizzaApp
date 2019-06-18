@@ -10,9 +10,10 @@ A simple application that allows the Managers to add ingredients available for t
 To set up locally follow these simple steps.
 
 ### Prerequisites
-1.Visual Studio Code
-2.Visual Studio
-3.SSMS
+1. Visual Studio Code
+2. Visual Studio
+3. SSMS
+4. Sign up for [AWS S3](https://aws.amazon.com/s3/) and enter your api key and secret key in order to use the file uploader.
 ### Installation
 1. Clone the repo
 ```sh
@@ -22,7 +23,7 @@ git clone https://github.com/JosephYCho/PizzaApp.git
 ```sh
 yarn add
 ```
-3. Create database and run the query pizza.sql file in SqlInit folder(Change Line one to Use [--database name--]).
+3. Create database and run the query pizza.sql file in SqlInit folder(Change Line one to Use [/**database name**/]).
 4. Connect to personal connection string in appsetting.json
 5. Press green arrow/IIS Express to build and run the application.
 
