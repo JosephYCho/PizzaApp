@@ -14,6 +14,7 @@ To set up locally follow these simple steps.
 2. Visual Studio
 3. SSMS
 4. Sign up for [AWS S3](https://aws.amazon.com/s3/) and enter your api key and secret key in order to use the file uploader.
+
 ### Installation
 1. Clone the repo
 ```sh
@@ -26,11 +27,6 @@ yarn add
 3. Create database and run the query pizza.sql file in SqlInit folder(Change Line one to Use [/**database name**/]).
 4. Connect to personal connection string in appsetting.json
 5. Press green arrow/IIS Express to build and run the application.
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
 
 ## Contact
 Joseph Cho-[LinkedIn](https://www.linkedin.com/in/joseph-cho-056060122/)
